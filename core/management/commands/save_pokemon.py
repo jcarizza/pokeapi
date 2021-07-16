@@ -1,3 +1,5 @@
+from core.updater import EvolutionChainReader
+
 from django.core.management.base import BaseCommand, CommandError
 
 class Command(BaseCommand):
@@ -8,5 +10,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         evolution_id = options['id']
-        print(evolution_id)
+        evolution_chain_reader = EvolutionChainReader(evolution_id)
+        print(evolution_chain_reader.get())
 
