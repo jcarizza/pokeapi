@@ -1,3 +1,5 @@
 Django
 requests
 djangorestframework
+httpretty
+factory_boy
