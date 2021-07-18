@@ -10,5 +10,5 @@ from .models import Pokemon
 
 class PokemonView(RetrieveAPIView):
     queryset = Pokemon.objects.all()
-    lookup_field = 'pk'
+    lookup_field = 'name'
     serializer_class = PokemonSerializer
