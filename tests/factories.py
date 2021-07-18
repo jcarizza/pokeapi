@@ -13,12 +13,12 @@ class BaseStatFactory(factory.django.DjangoModelFactory):
     class Meta:
         model =  BaseStat
 
-    hp = FuzzyInteger(low=1)
-    speed = FuzzyInteger(low=1)
-    defense = FuzzyInteger(low=1)
-    attack = FuzzyInteger(low=1)
-    special_defence = FuzzyInteger(low=1)
-    special_attack = FuzzyInteger(low=1)
+    hp = FuzzyInteger(low=1, high=100)
+    speed = FuzzyInteger(low=1, high=100)
+    defense = FuzzyInteger(low=1, high=100)
+    attack = FuzzyInteger(low=1, high=100)
+    special_defence = FuzzyInteger(low=1, high=100)
+    special_attack = FuzzyInteger(low=1, high=100)
 
 
 class PokemonFactory(factory.django.DjangoModelFactory):
