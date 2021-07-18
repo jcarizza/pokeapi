@@ -26,8 +26,14 @@ class EvolutionChainResponse:
 
     @classmethod
     def parse_response(cls, response):
-        data = response.json()
-        evolutions = cls.read_evolutions(data)
+        pokemon_data = {}
+        response_data = response.json()
+        evolutions = cls.read_evolutions(response_data)
+
+
+        pokemon_data['evolutions'] = evolutions
+
+        return pokemon_data
 
     @classmethod
     def read_evolutions(cls, data, evolutions=None):
@@ -57,5 +63,5 @@ class EvolutionChainReader(BaseReader):
 
     def get(self):
         response = super().get()
-        EvolutionChainResponse.parse_response(response)
+        return EvolutionChainResponse.parse_response(response)
 

@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from core.updater import EvolutionChainReader
 
 from django.core.management.base import BaseCommand, CommandError
@@ -11,5 +13,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         evolution_id = options['id']
         evolution_chain_reader = EvolutionChainReader(evolution_id)
-        print(evolution_chain_reader.get())
+        pokemon_info = evolution_chain_reader.get()
+        pprint(pokemon_info)
 

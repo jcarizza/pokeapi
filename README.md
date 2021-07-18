@@ -21,9 +21,9 @@ Valores a guardar:
 • Weight (Se obtiene de pokemon)
 • Id (Se obtiene de pokemon)
 • Evolutions 
-  - evolution_description.trigger.name (Es el tipo de evolucion)
+  - Pre evolucion o pos evolucion (pichu, pikachu, raichu) (Ej: para pikachu, pichu es pre evolution y raichu es pos)
   - species.name
-  - id
+  - id species.url y leer el ID
 
 
 # Crear endpoing que reciba el nombre del pikachu y retorne toda esta info
