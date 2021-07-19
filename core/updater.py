@@ -116,7 +116,6 @@ class PokemonInfoHandler:
     @staticmethod
     def retrieve_and_store_pokemon_info(evolution_chain_id):
         pokemons, evolutions = EvolutionChainReader(evolution_chain_id).get()
-
         created_evolutions = []
         for evo in evolutions:
             evolution, _ = Evolution.objects.update_or_create(
@@ -132,7 +131,7 @@ class PokemonInfoHandler:
                     "name": pokemon["name"],
                     "height": pokemon["height"],
                     "weight": pokemon["weight"],
-                    "base_stats": stats,
+                    "base_stats": stats
                 },
             )
 

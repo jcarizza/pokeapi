@@ -2,7 +2,7 @@ import pytest
 
 from rest_framework.test import APIRequestFactory
 
-from factories import PokemonFactory, EvolutionFactory
+from factories import PokemonFactory, EvolutionFactory, BaseStatFactory
 from core.views import PokemonView
 
 
@@ -14,6 +14,16 @@ def pokemon():
 @pytest.fixture
 def evolution_factory():
     return EvolutionFactory
+
+
+@pytest.fixture
+def pokemon_factory():
+    return PokemonFactory
+
+
+@pytest.fixture
+def base_stat_factory():
+    return BaseStatFactory
 
 
 class TestPokemonResource:

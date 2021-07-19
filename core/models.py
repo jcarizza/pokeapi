@@ -40,7 +40,7 @@ class Pokemon(models.Model):
     pokemon_id = models.IntegerField(unique=True)
     name = models.CharField(max_length=300)
     base_stats = models.ForeignKey(
-        BaseStat, related_name="pokemon", on_delete=models.CASCADE
+        BaseStat,related_name="pokemon", on_delete=models.CASCADE, null=True
     )
     evolutions = models.ManyToManyField(Evolution, related_name="pokemons")
     height = models.IntegerField()
