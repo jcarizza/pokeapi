@@ -1,5 +1,3 @@
-import json
-
 import httpretty
 from django.conf import settings
 
@@ -8,7 +6,7 @@ from core.updater import PokemonInfoHandler
 
 
 def load_mocked_response_file(name):
-    with open(name, 'rb') as f:
+    with open(name, "rb") as f:
         data = f.read()
     return data
 
@@ -20,24 +18,33 @@ def test_update_evolution_chain(db):
         httpretty.register_uri(
             httpretty.GET,
             f"{settings.BASE_API}/pokemon-species/{_id}/",
-            body=load_mocked_response_file(f"{settings.BASE_DIR}/tests/mocked_responses/pokemon_species_{_id}.json"),
-            content_type='application/json'
+            body=load_mocked_response_file(
+                f"{settings.BASE_DIR}/tests/mocked_responses"
+                f"/pokemon_species_{_id}.json"
+            ),
+            content_type="application/json",
         )
 
-    for name in ['pichu', 'pikachu', 'raichu']:
+    for name in ["pichu", "pikachu", "raichu"]:
         httpretty.register_uri(
             httpretty.GET,
             f"{settings.BASE_API}/pokemon/{name}/",
-            body=load_mocked_response_file(f"{settings.BASE_DIR}/tests/mocked_responses/pokemon_{name}.json"),
-            content_type='application/json'
+            body=load_mocked_response_file(
+                f"{settings.BASE_DIR}/tests/mocked_responses/"
+                f"pokemon_{name}.json"
+            ),
+            content_type="application/json",
         )
 
     chain_id = 10
     httpretty.register_uri(
         httpretty.GET,
         f"{settings.BASE_API}/evolution-chain/{chain_id}/",
-        body=load_mocked_response_file(f"{settings.BASE_DIR}/tests/mocked_responses/evolution_chain_10.json"),
-        content_type='application/json'
+        body=load_mocked_response_file(
+            f"{settings.BASE_DIR}/tests/mocked_responses/"
+            f"evolution_chain_10.json"
+        ),
+        content_type="application/json",
     )
 
     PokemonInfoHandler.retrieve_and_store_pokemon_info(chain_id)

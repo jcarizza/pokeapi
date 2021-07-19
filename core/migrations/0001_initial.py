@@ -8,40 +8,81 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='BaseStat',
+            name="BaseStat",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('hp', models.IntegerField()),
-                ('speed', models.IntegerField()),
-                ('defense', models.IntegerField()),
-                ('attack', models.IntegerField()),
-                ('special_defence', models.IntegerField()),
-                ('special_attack', models.IntegerField()),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("hp", models.IntegerField()),
+                ("speed", models.IntegerField()),
+                ("defense", models.IntegerField()),
+                ("attack", models.IntegerField()),
+                ("special_defence", models.IntegerField()),
+                ("special_attack", models.IntegerField()),
             ],
         ),
         migrations.CreateModel(
-            name='Evolution',
+            name="Evolution",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=300)),
-                ('evolution_id', models.IntegerField()),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=300)),
+                ("evolution_id", models.IntegerField()),
             ],
         ),
         migrations.CreateModel(
-            name='Pokemon',
+            name="Pokemon",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('pokemon_id', models.IntegerField(unique=True)),
-                ('name', models.CharField(max_length=300)),
-                ('height', models.DecimalField(decimal_places=2, max_digits=4)),
-                ('weight', models.DecimalField(decimal_places=2, max_digits=4)),
-                ('base_stats', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='stats', to='core.basestat')),
-                ('evolutions', models.ManyToManyField(related_name='evolutions', to='core.Evolution')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("pokemon_id", models.IntegerField(unique=True)),
+                ("name", models.CharField(max_length=300)),
+                (
+                    "height",
+                    models.DecimalField(decimal_places=2, max_digits=4),
+                ),
+                (
+                    "weight",
+                    models.DecimalField(decimal_places=2, max_digits=4),
+                ),
+                (
+                    "base_stats",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="stats",
+                        to="core.basestat",
+                    ),
+                ),
+                (
+                    "evolutions",
+                    models.ManyToManyField(
+                        related_name="evolutions", to="core.Evolution"
+                    ),
+                ),
             ],
         ),
     ]

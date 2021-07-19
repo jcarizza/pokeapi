@@ -3,7 +3,6 @@ from factory.fuzzy import FuzzyInteger, FuzzyText
 from core.models import Evolution, BaseStat, Pokemon
 
 
-
 class EvolutionFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Evolution
@@ -14,7 +13,7 @@ class EvolutionFactory(factory.django.DjangoModelFactory):
 
 class BaseStatFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model =  BaseStat
+        model = BaseStat
 
     hp = FuzzyInteger(low=1, high=100)
     speed = FuzzyInteger(low=1, high=100)
@@ -29,7 +28,7 @@ class PokemonFactory(factory.django.DjangoModelFactory):
         model = Pokemon
 
     pokemon_id = factory.Sequence(lambda n: n)
-    name = factory.Sequence(lambda n: 'pokemon_%s' % n)
+    name = factory.Sequence(lambda n: "pokemon_%s" % n)
     base_stats = factory.SubFactory(BaseStatFactory)
     height = FuzzyInteger(low=1)
     weight = FuzzyInteger(low=1)

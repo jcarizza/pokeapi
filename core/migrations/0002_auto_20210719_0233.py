@@ -7,28 +7,34 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0001_initial'),
+        ("core", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='pokemon',
-            name='base_stats',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='pokemon', to='core.basestat'),
+            model_name="pokemon",
+            name="base_stats",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="pokemon",
+                to="core.basestat",
+            ),
         ),
         migrations.AlterField(
-            model_name='pokemon',
-            name='evolutions',
-            field=models.ManyToManyField(related_name='pokemons', to='core.Evolution'),
+            model_name="pokemon",
+            name="evolutions",
+            field=models.ManyToManyField(
+                related_name="pokemons", to="core.Evolution"
+            ),
         ),
         migrations.AlterField(
-            model_name='pokemon',
-            name='height',
+            model_name="pokemon",
+            name="height",
             field=models.IntegerField(),
         ),
         migrations.AlterField(
-            model_name='pokemon',
-            name='weight',
+            model_name="pokemon",
+            name="weight",
             field=models.IntegerField(),
         ),
     ]

@@ -4,3 +4,5 @@ djangorestframework
 httpretty
 factory_boy
 pytest-django
+flake8
+black

@@ -1,45 +1,47 @@
 # PokeAPI
 
 
-## Instalar
+## Install
 
 
-### Crear entorno virtual
+### Create virtualenv
 ```
 $ pyenv virtualenv pokeapi
 ```
 
-### Instalar dependencias
+### Install dependencies
 
 ```
 $ pyenv activate pokeapi
 $ pip install -r requirements.txt
 ```
 
-### Correr las migraciones
+### Run migrations
 ```
 $ ./manage.py migrate
 ```
 
-### Correr tests
+### Run tests
 ```
 $ pytest
 ```
 
+###
 
-### Precargar informacion de los pokemons de la cadena de evolucion con id=10
+
+### Retrieve and save pokemons and evolutions from evolution chain with id=10
 
 ```
 $ ./manage.py save_pokemon 10
 ```
 
 
-### Iniciar servidor
+### Start server
 ```
 $ ./manage.py runserver
 ```
 
-### Leer informacion sobre `pichu`
+### Read info about `pichu` pokemon from our API
 ```
 Entrar a la URL
 
@@ -47,3 +49,8 @@ http://localhost:8000/api/pokemon/pichu
 ```
 
 
+### Run formater, flake and tests
+```
+$ chmod +x build.sh
+$ ./build.sh
+```
