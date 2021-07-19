@@ -1,5 +1,5 @@
 import factory
-from factory.fuzzy import FuzzyInteger
+from factory.fuzzy import FuzzyInteger, FuzzyText
 from core.models import Evolution, BaseStat, Pokemon
 
 
@@ -7,6 +7,9 @@ from core.models import Evolution, BaseStat, Pokemon
 class EvolutionFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Evolution
+
+    name = FuzzyText()
+    evolution_id = factory.Sequence(lambda n: n)
 
 
 class BaseStatFactory(factory.django.DjangoModelFactory):
