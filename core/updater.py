@@ -1,9 +1,9 @@
 from pprint import pprint
 
 import requests
+from django.conf import settings
 
-BASE_API = "https://pokeapi.co/api/v2"
-ENDPOINT_POKEMON = "{BASE_API}/pokemon/{name}"
+from core.models import Pokemon, BaseStat, Evolution
 
 
 class BaseReader:
@@ -11,13 +11,6 @@ class BaseReader:
 
     def get(self):
         response = requests.get(self.url)
-
-        print('=== Mock URL ===')
-        print(self.url)
-        with open(self.url.replace('/', '_'), 'w+') as f:
-            f.write(response.content.decode('utf8'))
-        print('=== Mock URL ===')
-
         response.raise_for_status()
         return response
 
@@ -50,14 +43,14 @@ class PokemonResponse:
 
 class PokemonReader(BaseReader):
     def __init__(self, name, *args, **kwagrs):
-        self.url = f"{BASE_API}/pokemon/{name}"
+        self.url = f"{settings.BASE_API}/pokemon/{name}/"
 
 
 class PokemonSpeciesReader(BaseReader):
     def __init__(self, *args, _id=None, url=None, **kwargs):
         self.url = url
         if url is None:
-            self.url = f"{BASE_API}/pokemon-species/{_id}"
+            self.url = f"{settings.BASE_API}/pokemon-species/{_id}/"
 
 class PokemonSpeciesResponse:
     @staticmethod
@@ -122,13 +115,43 @@ class EvolutionChainResponse:
 
 class EvolutionChainReader(BaseReader):
 
-    def __init__(self, _id, *args, **kwargs):
-        self.url = f"{BASE_API}/evolution-chain/{_id}/"
+    def __init__(self, evolution_chain_id, *args, **kwargs):
+        self.url = f"{settings.BASE_API}/evolution-chain/{evolution_chain_id}/"
 
     def get(self):
         response = super().get()
-        breakpoint()
-        pokemons, evolutions =  EvolutionChainResponse.parse_response(response)
-        pprint(pokemons)
-        pprint(evolutions)
+        return EvolutionChainResponse.parse_response(response)
+
+
+
+class PokemonInfoHandler:
+    @staticmethod
+    def retrieve_and_store_pokemon_info(evolution_chain_id):
+        pokemons, evolutions = EvolutionChainReader(evolution_chain_id).get()
+
+        created_evolutions = []
+        for evo in evolutions:
+            evolution, _ = Evolution.objects.update_or_create(
+                name=evo['name'],
+                defaults={
+                    'evolution_id': evo['id']
+                }
+            )
+            created_evolutions.append(evolution)
+
+        for pokemon in pokemons:
+            stats = BaseStat.objects.create(**pokemon['base_stats'])
+            poke, _ = Pokemon.objects.update_or_create(
+                pokemon_id=pokemon['id'],
+                defaults={
+                    'name': pokemon['name'],
+                    'height': pokemon['height'],
+                    'weight': pokemon['weight'],
+                    'base_stats': stats
+                }
+            )
+
+            for pokemon_evolution in created_evolutions:
+                poke.evolutions.add(pokemon_evolution)
+
 

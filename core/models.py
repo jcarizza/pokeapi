@@ -5,6 +5,9 @@ class Evolution(models.Model):
     name = models.CharField(max_length=300)
     evolution_id = models.IntegerField()
 
+    def __str__(self):
+        return f"{self.name}"
+
     def evolution_type(self, pokemon_name):
         evolutions = list(Evolution.objects.filter(pokemons__id__in=[p.id for p in self.pokemons.all()]).values_list('name', flat=True))
         this_evo = evolutions.index(self.name)
@@ -25,15 +28,20 @@ class BaseStat(models.Model):
     special_defence = models.IntegerField()
     special_attack = models.IntegerField()
 
+    def __str__(self):
+        return f"{self.pokemon.name}"
+
 
 class Pokemon(models.Model):
     pokemon_id = models.IntegerField(unique=True)
     name = models.CharField(max_length=300)
     base_stats = models.ForeignKey(BaseStat, related_name='pokemon', on_delete=models.CASCADE)
     evolutions = models.ManyToManyField(Evolution, related_name='pokemons')
-    height = models.DecimalField(max_digits=4, decimal_places=2)
-    weight = models.DecimalField(max_digits=4, decimal_places=2)
+    height = models.IntegerField()
+    weight = models.IntegerField()
 
+    def __str__(self):
+        return f"{self.name}"
 
     @property
     def get_evolutions(self):

@@ -1,29 +1,48 @@
+# PokeAPI
 
 
+## Instalar
 
 
-# Implementar comando que recibe un ID que identifica al recurso cadena de evolution
+### Crear entorno virtual
+```
+$ pyenv virtualenv pokeapi
+```
 
-Ahi comenzamos a obtener informacion sobre esa cadena de evolucion y el pokemon al 
-que corresponde esa cadena de evolucion
+### Instalar dependencias
 
-Evolution chain endpint [evolution-chain]
-https://pokeapi.co/api/v2/evolution-chain/{id}/
+```
+$ pip install -r requirements.txt
+```
 
-Pokemon info [pokemon]
-https://pokeapi.co/api/v2/pokemon/{id or name}/
+### Correr las migraciones
+```
+$ ./manage.py migrate
+```
 
-
-Valores a guardar:
-• Name (Se obviene de evolution-chain)
-• Base stats (for the 6 categories) (Se obtiene de pokemon.stats)
-• Height (Se obtiene de pokemon)
-• Weight (Se obtiene de pokemon)
-• Id (Se obtiene de pokemon)
-• Evolutions 
-  - Pre evolucion o pos evolucion (pichu, pikachu, raichu) (Ej: para pikachu, pichu es pre evolution y raichu es pos)
-  - species.name
-  - id species.url y leer el ID
+### Correr tests
+```
+$ pytest
+```
 
 
-# Crear endpoing que reciba el nombre del pikachu y retorne toda esta info
+### Precargar informacion de los pokemons de la cadena de evolucion con id=10
+
+```
+$ ./manage.py save_pokemon 10
+```
+
+
+### Iniciar servidor
+```
+$ ./manage.py runserver
+```
+
+### Leer informacion sobre `pichu`
+```
+Entrar a la URL
+
+http://localhost:8000/api/pokemon/pichu
+```
+
+

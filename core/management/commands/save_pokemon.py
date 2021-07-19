@@ -1,18 +1,17 @@
 from pprint import pprint
 
-from core.updater import EvolutionChainReader
+from core.updater import PokemonInfoHandler
 
 from django.core.management.base import BaseCommand, CommandError
 
+
 class Command(BaseCommand):
-    help = 'Save Pokemon info'
+    help = 'Save Pokemon and Evolution info.'
 
     def add_arguments(self, parser):
         parser.add_argument('id', type=int)
 
     def handle(self, *args, **options):
-        evolution_id = options['id']
-        evolution_chain_reader = EvolutionChainReader(evolution_id)
-        pokemon_info = evolution_chain_reader.get()
-        pprint(pokemon_info)
+        evolution_chain_id = options['id']
+        PokemonInfoHandler.retrieve_and_store_pokemon_info(evolution_chain_id)
 
