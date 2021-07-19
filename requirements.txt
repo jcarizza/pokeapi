@@ -3,3 +3,4 @@ requests
 djangorestframework
 httpretty
 factory_boy
+pytest-django

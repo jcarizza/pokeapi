@@ -12,6 +12,7 @@ $ pyenv virtualenv pokeapi
 ### Instalar dependencias
 
 ```
+$ pyenv activate pokeapi
 $ pip install -r requirements.txt
 ```
 
