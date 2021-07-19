@@ -43,6 +43,7 @@ class TestPokemonResource:
             'special_defence',
             'special_attack'
         )
+
         for attribute in stats_attributes:
             assert response.data['base_stats'][attribute] == getattr(pokemon.base_stats, attribute)
 

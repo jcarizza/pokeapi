@@ -1,3 +1,5 @@
+from pprint import pprint
+
 import requests
 
 BASE_API = "https://pokeapi.co/api/v2"
@@ -9,17 +11,46 @@ class BaseReader:
 
     def get(self):
         response = requests.get(self.url)
+
+        print('=== Mock URL ===')
+        print(self.url)
+        with open(self.url.replace('/', '_'), 'w+') as f:
+            f.write(response.content.decode('utf8'))
+        print('=== Mock URL ===')
+
         response.raise_for_status()
         return response
 
 
 class PokemonResponse:
-    pass
+
+    @staticmethod
+    def parse_response(response):
+
+        data = response.json()
+        stats = {}
+        for stat in data['stats']:
+            stats[stat['stat']['name']] = stat['base_stat']
+
+        return {
+            'name': data['name'],
+            'height': data['height'],
+            'weight': data['weight'],
+            'id': data['id'],
+            'base_stats': {
+                'hp': stats['hp'],
+                'speed': stats['speed'],
+                'defense': stats['defense'],
+                'attack': stats['attack'],
+                'special_defence': stats['special-defense'],
+                'special_attack': stats['special-attack'],
+            }
+        }
 
 
 class PokemonReader(BaseReader):
-    def __init__(self, _id, *args, **kwagrs):
-        self.url = f"{BASE_API}/pokemon/pokemon/{_id}"
+    def __init__(self, name, *args, **kwagrs):
+        self.url = f"{BASE_API}/pokemon/{name}"
 
 
 class PokemonSpeciesReader(BaseReader):
@@ -38,21 +69,25 @@ class EvolutionChainResponse:
 
     @classmethod
     def parse_response(cls, response):
-        pokemon_data = {}
         response_data = response.json()
         evolutions = cls.read_evolutions(response_data)
+        pokemons = cls.read_pokemon_info_for_every_evolution(evolutions)
 
-
-        pokemon_data['evolutions'] = evolutions
-
-        return pokemon_data
+        return (
+            pokemons,
+            evolutions
+        )
 
     @classmethod
-    def read_info_for_every_evolution(cls, evolutions):
+    def read_pokemon_info_for_every_evolution(cls, evolutions):
+        pokemons = []
         for evo in evolutions:
-            data = PokemonReader(url)
-            poke['name'] = data.name
-            poke['height'] = data.height
+            response = PokemonReader(evo['name']).get()
+            pokemon_data = PokemonResponse.parse_response(response)
+            pokemons.append(pokemon_data)
+
+        return pokemons
+
 
     @classmethod
     def get_pokemon_specie_info(cls, url):
@@ -92,5 +127,8 @@ class EvolutionChainReader(BaseReader):
 
     def get(self):
         response = super().get()
-        return EvolutionChainResponse.parse_response(response)
+        breakpoint()
+        pokemons, evolutions =  EvolutionChainResponse.parse_response(response)
+        pprint(pokemons)
+        pprint(evolutions)
 
